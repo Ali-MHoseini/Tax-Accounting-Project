@@ -19,7 +19,7 @@ export const CustomersRow = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
                 
                 break;
             case '2':
-                setBcgColor('#269958')
+                setBcgColor('#F5CD2D')
                 break;
             default:
                 console.log(null)
@@ -30,7 +30,7 @@ export const CustomersRow = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
         <>
             <tr>
                 <td>
-                    <span style={{padding:'0.25rem',backgroundColor:'red',borderRadius:'0.5rem'}}>{Title ==="1"?"حقیقی":"حقوقی"}</span>
+                    <span style={{padding:'0.25rem',backgroundColor:`${bcgColor}`,borderRadius:'0.5rem'}}>{Title ==="1"?"حقیقی":"حقوقی"}</span>
                 </td>
                 <td>{Tinb}</td>
                 <td>{Name}</td>

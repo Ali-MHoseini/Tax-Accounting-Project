@@ -23,7 +23,7 @@ export const CustomersRowBill = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
             default:
                 console.log(null)
         }
-    },[])
+    },[Title])
     return (
         <>
             <tr onClick={(e)=>console.log((e.target as HTMLTableRowElement).parentNode)}>
