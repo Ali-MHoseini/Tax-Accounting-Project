@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Autocomplete, TextField} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from "@mui/material/Button";
+import { Input } from '../Input/Input';
+import {customerInput} from "../../services/constants/StaticData"
 
 interface addModal {
     CloseModal:React.MouseEventHandler,
@@ -9,7 +11,6 @@ interface addModal {
 }
 const AddModal = ({CloseModal,ShowModal}:addModal)=> {
     const customerModel = [{label:'مالیاتی',id:'1'},{label:'غیرمالیاتی',id:'2'}]
-
     return (
         <>
             <div className="BackDrop" style={{display:ShowModal?'block':'none'}}/>
@@ -23,26 +24,11 @@ const AddModal = ({CloseModal,ShowModal}:addModal)=> {
 
                 <div className='AddModalBoxes'>
                     <div className='Cus__inps'>
-                        <div className='ModalBox__Items'>
-                            <label htmlFor=''>شناسه ملی خریدار:</label>
-                            <TextField sx={{width: '20rem'}} />
-                        </div>
-                        <div className='ModalBox__Items'>
-                            <label >نام خریدار:</label>
-                            <TextField sx={{width: '20rem'}} />
-                        </div>
-                        <div className='ModalBox__Items'>
-                            <label htmlFor=''>شناسه اقتصادی:</label>
-                            <TextField sx={{width: '20rem'}} />
-                        </div>
-                        <div className='ModalBox__Items'>
-                            <label >کد شعبه:</label>
-                            <TextField sx={{width: '20rem'}} />
-                        </div>
-                        <div className='ModalBox__Items'>
-                            <label htmlFor=''>کد پستی:</label>
-                            <TextField sx={{width: '20rem'}} />
-                        </div>
+                        {
+                            customerInput && customerInput.map((inp,index) => (
+                                <Input key={index} Title={inp} />
+                            ))
+                        }
                     </div>
                     <Button variant='contained' className='addButton'>ثبت مشتری</Button>
 

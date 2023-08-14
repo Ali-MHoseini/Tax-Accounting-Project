@@ -786,3 +786,6 @@ export let customerData:customerTypeData[] = [
         bpc:''
     },
 ]
+
+
+export const customerInput:string[] = ['شناسه ملی خریدار','نام خریدار','شناسه اقتصادی','نوع خریدار','کد شعبه','کدپستی']
