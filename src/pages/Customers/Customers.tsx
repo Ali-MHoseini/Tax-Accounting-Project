@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import Pagination from '@mui/material/Pagination';
 import {Header} from "../../layouts/Header/Header";
 import {SideBar} from "../../layouts/SideBar/SideBar";
@@ -9,12 +9,76 @@ import AddModal from "../../components/AddModal/AddModal";
 import {CustomersRowBill} from "../../components/CustomersRowBill/CustomersRowBill";
 import {NoiseAwareTwoTone} from "@mui/icons-material";
 import {SearchBox} from "../../components/SearchBox/SearchBox";
+import {customerData} from "../../services/constants/StaticData"
+import {customerTypeData} from "../../services/constants/StaticData"
+
+
 export const Customers = () => {
     document.title = 'مشتریان'
-    const [showModal,setShowModal] = useState<boolean>(false)
+    const customers:customerTypeData[] = customerData,
+        [showModal,setShowModal] = useState<boolean>(false),
+        [tableTitle,setTitle] = useState<string>('همه خریداران'),
+        [filteredCustomerData,setFilteredCustomerData] = useState(customers),
+        [pageinationNumber,setPageinationNumber] = useState<number>(10),
+        [dropBox,setDropBox] = useState<boolean>(false)
+
+
     const closingModal = ()=> {
         setShowModal(false)
     }
+
+    //--------------------ClickChangeTitle---------------------
+    const handleOnClick = (event:ChangeEvent):void => {
+        const clickName:string = (event.target as HTMLDivElement).innerHTML
+        setTitle(clickName)
+        setDropBox(false)
+    }
+    const handleOnChange = (event:ChangeEvent):void => {
+        const clickName:string = (event.target as HTMLSelectElement).value
+        setTitle(clickName)
+        setDropBox(false)
+    }
+    //--------------------Drag/Drop----------------------------
+    const handleOnDrag = (event:React.DragEvent) => {
+        const dragName = (event.target as HTMLDivElement).children[1].innerHTML
+        event.dataTransfer.setData('sortName',dragName)
+    }
+    const handleOnDrop = (event:React.DragEvent):void=>{
+        const dataTitle = event.dataTransfer.getData("sortName") as string
+        setTitle(dataTitle)
+        setDropBox(false)
+    }
+
+    //-----------------setPaginationNumber----------------
+
+    const setPaginationNumber = ():void =>{
+        if (filteredCustomerData.length < 6) setPageinationNumber(1)
+        else {
+            setPageinationNumber(Math.ceil(filteredCustomerData.length / 6 ))
+        }
+    }
+
+    //--------------FilterCustomer--------------------
+    useEffect(() => {
+        switch (tableTitle) {
+            case 'حقیقی':
+            case 'خریدار های حقیقی':
+                const HaqCustomer = customers.filter(customer => customer.tob === '1')
+                setFilteredCustomerData(HaqCustomer)
+                setPaginationNumber()
+                break
+            case 'حقوقی':
+            case 'خریدار های حقوقی':
+                const HoqCustomer = customers.filter(customer => customer.tob === '2')
+                setFilteredCustomerData(HoqCustomer)
+                setPaginationNumber()
+                break
+            case 'همه خریداران':
+                setFilteredCustomerData(customers)
+                break
+        }
+    },[tableTitle])
+
     return(
         <div style={{display:'flex'}}>
             <SideBar/>
@@ -33,8 +97,15 @@ export const Customers = () => {
                         </div>
                     </div>
                     <div className="mainBox">
-                        <div className='table__box'>
-                            <SearchBox SearchPlaceholder='جستجو بر اساس نام مشتری...'/>
+                        <div className='table__box'
+                            onDrop={handleOnDrop}
+                            onDragOver={(e)=>e.preventDefault()}>
+                        <div className={`${dropBox?'billDetails__RightBox_Drop':'hidden'}`} />
+                            <p className={`${dropBox?'billDetails__RightBox_massage':'hidden'}`}>
+                                    در اینجا رها کنید
+                                    <div></div>
+                            </p>
+                            <SearchBox SetValue={handleOnChange} SearchPlaceholder='جستجو بر اساس نام مشتری...'/>
                             <table>
                                 <thead>
                                 <th>نوع خریدار</th>
@@ -46,42 +117,60 @@ export const Customers = () => {
                                 <th>#</th>
                                 </thead>
                                 <tbody>
-                                <CustomersRowBill Title='حقیقی'/>
-                                <CustomersRowBill Title='حقیقی'/>
-                                <CustomersRowBill Title='حقوقی'/>
-                                <CustomersRowBill Title='حقیقی'/>
-                                <CustomersRowBill Title="حقوقی"/>
-                                <CustomersRowBill Title="حقوقی"/>
-                                <CustomersRowBill Title='حقیقی'/>
+                                    {
+                                        filteredCustomerData && filteredCustomerData.map((customer)=>(
+                                        <CustomersRowBill
+                                         key={crypto.randomUUID}
+                                         Name={customer.name}
+                                         Title={customer.tob} 
+                                         Bid={customer.bid} 
+                                         Tinb={customer.tinb} 
+                                         Bpc={customer.bpc} 
+                                         Bbc={customer.bbc}/>
+                                        ))
+                                        
+                                    }
                                 </tbody>
                             </table>
-                            <Pagination count={10} color="primary" className='pagination'/>
+                            <Pagination count={pageinationNumber} color="primary" className='pagination'/>
                         </div>
                         <div className='colBoxes'>
                             <ColorBox
                                 key={crypto.randomUUID()}
-                                Title={"تعداد کل خریدار ها"}
-                                Length={22}
+                                Title={"همه خریداران"}
+                                Length={customers.length}
                                 IconColor={"blue"}
                                 BackColor={"#6D66E1"}
                                 BackColor2={"#afaddc"}
-                                Icon={<PeopleIcon/>}/>
+                                Icon={<PeopleIcon/>}
+                                DragFunc={handleOnDrag}
+                                ClickFunc={handleOnClick}
+                                DragBool={()=>setDropBox(true)} 
+                                DragEnd={()=>setDropBox(false)}/>
                             <ColorBox
                                 key={crypto.randomUUID()}
                                 Title={"خریدار های حقوقی"}
-                                Length={12}
+                                Length={customers.map(customer => customer.tob === '2').filter(status => status === true).length}
                                 IconColor={"yellow"}
                                 BackColor={"#F5CD2D"}
                                 BackColor2={"#e8e576"}
-                                Icon={<PeopleIcon/>}/>
+                                Icon={<PeopleIcon/>}
+                                DragFunc={handleOnDrag}
+                                ClickFunc={handleOnClick}
+                                DragBool={()=>setDropBox(true)} 
+                                DragEnd={()=>setDropBox(false)}/>
                             <ColorBox
                                 key={crypto.randomUUID()}
                                 Title={"خریدار های حقیقی"}
-                                Length={10}
+                                Length={customers.map(customer => customer.tob === '1').filter(status => status === true).length}
                                 IconColor={"red"}
                                 BackColor={"#E85984"}
                                 BackColor2={"#e1b0c0"}
-                                Icon={<PeopleIcon/>}/>
+                                Icon={<PeopleIcon/>}
+                                DragFunc={handleOnDrag}
+                                ClickFunc={handleOnClick}
+                                DragBool={()=>setDropBox(true)} 
+                                DragEnd={()=>setDropBox(false)}/>
                         </div>
                         </div>
                     </div>

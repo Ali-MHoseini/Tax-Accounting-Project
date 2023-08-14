@@ -2,18 +2,23 @@ import React, {useEffect, useState} from 'react';
 
 interface CustomersRow{
     Title: string;
+    Tinb:string,
+    Name: string,
+    Bid:string,
+    Bpc:string,
+    Bbc:string
 }
-export const CustomersRow = ({Title}:CustomersRow)=> {
+export const CustomersRow = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
 
     const [bcgColor,setBcgColor] = useState<string>('')
 
     useEffect(()=>{
         switch (Title) {
-            case 'حقیقی':
+            case '1':
                 setBcgColor('#DD0F10')
                 
                 break;
-            case 'حقوقی':
+            case '2':
                 setBcgColor('#269958')
                 break;
             default:
@@ -25,13 +30,13 @@ export const CustomersRow = ({Title}:CustomersRow)=> {
         <>
             <tr>
                 <td>
-                    <span style={{padding:'0.25rem',backgroundColor:'red',borderRadius:'0.5rem'}}>{Title}</span>
+                    <span style={{padding:'0.25rem',backgroundColor:'red',borderRadius:'0.5rem'}}>{Title ==="1"?"حقیقی":"حقوقی"}</span>
                 </td>
-                <td>1245</td>
-                <td>علی حسینی</td>
-                <td>111111111111</td>
-                <td>225566</td>
-                <td>6581822369</td>
+                <td>{Tinb}</td>
+                <td>{Name}</td>
+                <td>{Bid}</td>
+                <td>{Bbc}</td>
+                <td>{Bpc}</td>
                 <td>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          className="bi bi-chevron-down" viewBox="0 0 16 16">

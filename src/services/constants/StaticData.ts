@@ -1,3 +1,14 @@
+export interface customerTypeData {
+        id:string,
+        name:string,
+        tob:string,
+        bid:string,
+        tinb:string,
+        bbc:string,
+        bpc:string
+}
+
+
 export let invoceData = [
     {
         id:"3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -734,5 +745,44 @@ export let invoceData = [
             status:"failed",
             taxId:"A11W2T1500052101c253",
         },
+    },
+]
+
+export let customerData:customerTypeData[] = [
+    {
+        id:'5632-89651C125-1245',
+        name:'علی محمد حسینی',
+        tob:'1',
+        bid:'1273102762',
+        tinb:'12731027620001',
+        bbc:'1',
+        bpc:'9536211965'
+    },
+    {
+        id:'5632-89651F124-1135',
+        name:'فریمهر راضی',
+        tob:'1',
+        bid:'0055316230',
+        tinb:'00553162300002',
+        bbc:'1',
+        bpc:'1289621212'
+    },
+    {
+        id:'5632-89651F124-1135',
+        name:'خدمات ارتباطی ایرانسل',
+        tob:'2',
+        bid:'14001212325',
+        tinb:'14001212325',
+        bbc:'',
+        bpc:''
+    },
+    {
+        id:'5632-89651F124-1135',
+        name:'کارگزاری آگاه',
+        tob:'2',
+        bid:'10102761459',
+        tinb:'10102761459',
+        bbc:'',
+        bpc:''
     },
 ]
