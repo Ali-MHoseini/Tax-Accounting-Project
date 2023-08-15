@@ -1,35 +1,42 @@
 import React, {useEffect,useState} from 'react';
 interface CustomersRow{
-    Title: string;
+    Title: string,
+    Tinb:string,
+    Name: string,
+    Bid:string,
+    Bpc:string,
+    Bbc:string,
+    
 }
-export const CustomersRowBill = ({Title}:CustomersRow)=> {
+export const CustomersRowBill = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
 
     const [bcgColor,setBcgColor] = useState<string>('')
 
     useEffect(()=>{
         switch (Title) {
-            case 'حقیقی':
+            case '1':
                 setBcgColor('#DD0F10')
                 
                 break;
-            case 'حقوقی':
+            case '2':
                 setBcgColor('#F5CD2D')
                 break;
             default:
                 console.log(null)
         }
-    },[])
+    },[Title])
     return (
         <>
             <tr onClick={(e)=>console.log((e.target as HTMLTableRowElement).parentNode)}>
                 <td>
-                    <span style={{padding:'0.25rem',backgroundColor:bcgColor,borderRadius:'0.5rem'}}>{Title}</span>
+                    <span style={{padding:'0.25rem',backgroundColor:bcgColor,borderRadius:'0.5rem'}}>{Title ==="1"?"حقیقی":"حقوقی"}</span>
                 </td>
-                <td>1245</td>
-                <td>علی حسینی</td>
-                <td>111111111111</td>
-                <td>225566</td>
-                <td>6581822369</td>
+                <td>{Tinb}</td>
+                <td>{Name}</td>
+                <td>{Bid}</td>
+                <td>{Bbc}</td>
+                <td>{Bpc}</td>
+                <td></td>
             </tr>
         </>
     )
