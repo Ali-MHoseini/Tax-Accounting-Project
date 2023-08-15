@@ -1263,11 +1263,9 @@ $backgroundBox:#fcfbfe;
 }
 @keyframes openPage {
   0% {
-    transform: translateX(-25%);
     opacity: 20%;
   }
   100% {
-    transform: translateX(0);
     opacity: 100%;
   }
 }

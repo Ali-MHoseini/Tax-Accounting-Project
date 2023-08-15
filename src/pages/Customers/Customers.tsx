@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect, ChangeEvent} from "react";
 import Pagination from '@mui/material/Pagination';
 import {Header} from "../../layouts/Header/Header";
 import {SideBar} from "../../layouts/SideBar/SideBar";
@@ -13,6 +13,8 @@ import {customerData} from "../../services/constants/StaticData"
 import {customerTypeData} from "../../services/constants/StaticData"
 
 
+
+
 export const Customers = () => {
     document.title = 'مشتریان'
     const customers:customerTypeData[] = customerData,
@@ -21,7 +23,6 @@ export const Customers = () => {
         [filteredCustomerData,setFilteredCustomerData] = useState(customers),
         [pageinationNumber,setPageinationNumber] = useState<number>(10),
         [dropBox,setDropBox] = useState<boolean>(false)
-
 
     const closingModal = ()=> {
         setShowModal(false)
@@ -82,7 +83,7 @@ export const Customers = () => {
     return(
         <div style={{display:'flex'}}>
             <SideBar/>
-            <AddModal CloseModal={closingModal} ShowModal={showModal} />
+            <AddModal CloseModal={closingModal} ShowModal={showModal}/>
             <div className='dashboard'>
                 <Header Title={`مشتری ها`}/>
                 <div className='dashboard__Box'>
@@ -126,7 +127,8 @@ export const Customers = () => {
                                          Bid={customer.bid} 
                                          Tinb={customer.tinb} 
                                          Bpc={customer.bpc} 
-                                         Bbc={customer.bbc}/>
+                                         Bbc={customer.bbc}
+                                         />
                                         ))
                                         
                                     }

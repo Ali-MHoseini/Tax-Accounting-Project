@@ -5,7 +5,8 @@ interface CustomersRow{
     Name: string,
     Bid:string,
     Bpc:string,
-    Bbc:string
+    Bbc:string,
+    
 }
 export const CustomersRowBill = ({Title,Tinb,Bid,Bbc,Bpc,Name}:CustomersRow)=> {
 

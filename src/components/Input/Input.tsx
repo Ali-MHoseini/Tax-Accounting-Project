@@ -2,11 +2,13 @@ import React from 'react'
 import {Autocomplete, TextField} from "@mui/material";
 
 interface Input{
-    Title:string
+    Title:string,
+    Func:Function,
+    Type:string
 }
 
 
-export function Input({Title}:Input) {
+export function Input({Title,Func,Type}:Input) {
 
     const tob =[
         {
@@ -28,7 +30,8 @@ export function Input({Title}:Input) {
             id="combo-box-demo"
             options={tob}
             sx={{ width: '20rem' }}
-            renderInput={(params) => <TextField {...params} label=""/>}
+            onChange={(e)=>Func(e,Type)}
+            renderInput={(params) => <TextField {...params} label="" />}
             />
         </div>
         )
@@ -38,7 +41,7 @@ export function Input({Title}:Input) {
   return (
             <div className='ModalBox__Items'>
                 <label htmlFor=''>{Title}:</label>
-                <TextField sx={{width: '20rem'}} />
+                <TextField sx={{width: '20rem'}} onChange={(e)=>Func(e,Type)}/>
             </div>
 
   )

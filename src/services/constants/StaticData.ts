@@ -8,6 +8,10 @@ export interface customerTypeData {
         bpc:string
 }
 
+interface customerInput{
+    actName:string,
+    name:string
+}
 
 export let invoceData = [
     {
@@ -787,5 +791,11 @@ export let customerData:customerTypeData[] = [
     },
 ]
 
-
-export const customerInput:string[] = ['شناسه ملی خریدار','نام خریدار','شناسه اقتصادی','نوع خریدار','کد شعبه','کدپستی']
+export const customerInput:customerInput[] = [
+    {actName:'bid',name:'شناسه ملی خریدار'},
+    {actName:'name',name:'نام خرید'},
+    {actName:'tinb',name:'شناسه اقتصادی خریدار'},
+    {actName:'tob',name:'نوع خریدار'},
+    {actName:'bbc',name:'کد شعبه'},
+    {actName:'bpc',name:'کدپستی'},
+]
